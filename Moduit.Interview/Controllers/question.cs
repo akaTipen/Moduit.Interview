@@ -84,7 +84,18 @@ namespace Moduit.Interview.Controllers
                                 .Where(x => x.tags.Any(y => y.Contains("Sports")))
                                 .OrderByDescending(x => x.id)
                                 .Take(3).ToList();
-                        return Ok(new { list });
+
+                        return Ok(
+                            list.Select(x => new
+                            {
+                                x.id,
+                                x.title,
+                                x.description,
+                                x.footer,
+                                x.tags,
+                                x.createdAt,
+                            })
+                        );
                     }
                     else
                         return NotFound(new { response.StatusCode });
